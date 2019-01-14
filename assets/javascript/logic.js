@@ -49,7 +49,6 @@ function reset()
 	startGame();
 	
 }
-console.log(userguess);
 
 
 function startGame()
