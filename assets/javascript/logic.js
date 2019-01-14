@@ -1,5 +1,5 @@
 // Word & Letter Bank
-var words = [ "pikes", "longs", "evans", "elbert", "massive", "capitol", "princeton", "sneffels", "grays", "harvard", "crestone", "columbia", "eolus", "blanca", "culebra", "la plata", "clark", "quandary", "windom", "uncompahgre", "lincoln", "antero", "castle"];
+var words = [ "pikes", "longs", "evans", "elbert", "massive", "capitol", "princeton", "sneffels", "grays", "harvard", "crestone", "columbia", "eolus", "blanca", "culebra", "clark", "quandary", "windom", "uncompahgre", "lincoln", "antero", "castle"];
 var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 console.log(words)
 
@@ -32,7 +32,7 @@ console.log(GuessesRemaining);
 function reset()
 {
 	//Pick a random word
-	RndWord = words[Math.floor(Math.random() * words.length)];
+	// RndWord = words[Math.floor(Math.random() * words.length)];
 	console.log(RndWord);
 	// Splits up letters in word
 	lettersInWord = RndWord.split('');
@@ -47,8 +47,9 @@ function reset()
 	wrongguesses = [];
 	blanksAndletters = [];
 	startGame();
-
+	
 }
+console.log(userguess);
 
 
 function startGame()
@@ -61,17 +62,19 @@ function startGame()
 	blanksAndletters = [];
 
 	//Pick a random word
-	RndWord = words[Math.floor(Math.random() * words.length)];
+	RndWord = words[Math.floor(Math.random() * words.length)].toString();
 	console.log(RndWord);
 	// Splits up letters in word
 	lettersInWord = RndWord.split('');
 	console.log(lettersInWord)
 	// Set blanks for word
 	blanks = lettersInWord.length;
+	console.log(lettersInWord);
+	console.log(blanks);
 
-	for(var i = 0; i< blanks; i++)
+	for(var i = 0; i < blanks; i++)
 	{
-		blanksAndletters.push('_');
+		blanksAndletters[i] = ' _ ';
 		document.getElementById('wordToGuess').innerHTML = blanksAndletters;
 	}
 	document.getElementById('wordToGuess').innerHTML = blanksAndletters.join(' ');
@@ -96,7 +99,7 @@ function checkanswer(userKey)
 			{
 				correctguess++;
 				blanksAndletters[i] = userKey;
-				document.getElementById('wordToGuess').innerHTML = blanksAndletters;
+				document.getElementById('wordToGuess').innerHTML = blanksAndletters.join(' ');
 			}
 		}
 	}
@@ -111,8 +114,26 @@ function checkanswer(userKey)
 		document.getElementById('wrongGuesses').innerHTML = wrongguesses;
 	}	
 }
-
+console.log(blanksAndletters);
 console.log(lettersInWord);
+
+
+//Initiates the Code
+startGame();
+
+document.onkeydown = function(event)
+{
+	var userguess = event.key;
+	for(var i = 0; i < letters.length; i++)
+	{	
+		if(userguess === letters[i])
+		{
+			var doubles = letters.splice(i,1);
+			checkanswer(userguess);
+			winOrlose();
+		}
+	}		
+}
 
 // Win / Lose function
 function winOrlose () 
@@ -131,21 +152,4 @@ function winOrlose ()
 		alert('You Lose');
 		reset();
 	}
-}
-
-//Initiates the Code
-startGame();
-
-document.onkeydown = function(event)
-{
-	var userguess = event.key;
-	for(var i = 0; i < letters.length; i++)
-	{	
-		if(userguess === letters[i])
-		{
-			var doubles = letters.splice(i,1);
-			checkanswer(userguess);
-			winOrlose();
-		}
-		}		
 }
